@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% set active_page='dashboard' %}
+{% block content %} 
+
+<div class="container bg-success bg-opacity-25 p-4 mt-4 mb-0 content">
+    <h1>{{ post.title }}</h1>
+    <p class="author">
+    By {{ post.author.username }} on {{ post.date_posted.strftime('%Y-%m-%d') }}
+    </p>
+    <p>{{ post.content }}</p>
+
+
+    <div class="container bg-success bg-opacity-25 p-4 mt-4 mb-0 content">
+        {% for comment in comments %}
+        <p>
+            "{{ comment.content }}"   -{{ comment.author.username }} on {{ comment.date_posted.strftime('%Y-%m-%d %H:%M') }}
+        </p>
+        {% endfor %}
+    </div>
+
+    <form method="POST" action="">
+    {{ form.hidden_tag() }}
+    <fieldset class="form-group my-3">
+      <div class="form-group">
+        {% if form.content.errors %}
+            {{ form.content(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+            {% for error in form.content.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+        {% else %}
+            {{form.content(class="form-control form-control-lg")}}
+        {% endif %}
+        </div>
+
+        <div class="form-group my-3">
+        {{ form.submit(class="btn btn-primary") }}
+        </div>
+
+    </form>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% if post.author == current_user %} 
+    <div> 
+        <a class="btn btn-primary btn-sm m-1" href="{{ url_for('update_post', post_id=post.id) }}">Update</a> 
+        <a class="btn btn-danger btn-sm m-1" href="{{ url_for('delete_post', post_id=post.id) }}">Delete</a>
+    </div> 
+    {% endif %} 
+</div> 
+{% endblock %}
+{% block footer %}This is the footer.{% endblock %}
+
+

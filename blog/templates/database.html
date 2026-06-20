@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<h1> This is the Database page.</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Password</th>
+            <th>Posts</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.password[:20] }}</td>
+            <td>{{ user.posts|length }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Content</th>
+            <th>Date</th>
+            <th>Author</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td>{{ post.id }}</td>
+            <td>{{ post.title }}</td>
+            <td>{{ post.content }}</td>
+            <td>{{ post.date_posted }}</td>
+            <td>{{ post.author_id }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
+{% block footer %}This is the footer.{% endblock %}

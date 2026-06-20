@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<h> Hello! </h>
+<p> Follow the instructions below to sign up.</p>
+{% endblock %}
+
+{% block form %}
+<div class="my-3">
+    <form action="" method="POST">
+    {{form.hidden_tag()}}
+
+    <fieldset class="form-group my-3">
+        <legend class="borer-bottom mb-4">Sign Up</legend>
+        <div class="form-group">
+        {{ form.username.label(class="form-control-label") }}
+        {% if form.username.errors %}
+            {{ form.username(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+            {% for error in form.username.errors %}
+                <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+        {% else %}
+            {{ form.username( class="form-control form-control-lg") }}
+        {% endif %}
+        </div>
+    
+        <div class="form-group my-3">
+        {{ form.password.label(class="form-control-label") }}
+        {% if form.password.errors %}
+            {{ form.password(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+            {% for error in form.password.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+        {% else %}
+            {{form.password(class="form-control form-control-lg")}}
+        {% endif %}
+        </div>
+
+        <div class="form-group my-3">
+        {{ form.confirm_password.label(class="form-control-label") }}
+        {% if form.confirm_password.errors %}
+            {{ form.confirm_password(class="form-control form-control-lg is-invalid")}}
+            <div class="invalid-feedback">
+            {% for error in form.confirm_password.errors %}
+            <span>{{ error }}</span>
+            {% endfor %}
+            </div>
+            {% else %}
+            {{form.confirm_password(class="form-control form-control-lg")}}
+            {% endif %}
+        </div>
+
+        <div class="form-group my-3">
+        {{ form.submit(class="btn btn-primary") }}
+        </div>
+
+    </fieldset>
+    </form>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block footer %}This is the footer.{% endblock %}

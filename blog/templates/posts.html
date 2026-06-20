@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %} 
+<div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Sorting
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+    <a class="dropdown-item" href="{{ url_for('sort_newest_post') }}">Newest</a>
+    <a class="dropdown-item" href="{{ url_for('posts') }}">Oldest</a>
+    <a class="dropdown-item" href="{{ url_for('sort_upvotes_post') }}">Upvotes</a>
+    </div>
+</div>
+{% for post in posts %}
+    <div class="container bg-success bg-opacity-25 p-4 mt-4 mb-0 content">
+
+        <h2>{{ post.title }}</h2>
+        <p>
+            By {{ post.author.username }} on {{ post.date_posted.strftime('%Y-%m-%d %H:%M') }}
+
+            {% if post.date_updated.strftime('%Y-%m-%d %H:%M') != post.date_posted.strftime('%Y-%m-%d %H:%M') %}
+                updated on {{ post.date_updated.strftime('%Y-%m-%d %H:%M') }}
+            {% endif %}
+        </p>
+        <p>{{ post.content }}</p>
+        <a class="btn btn-primary btn-sm m-1" href="{{ url_for('post', post_id=post.id) }}">Comment</a> 
+
+
+        <a href="{{ url_for('upvote', post_id=post.id) }}">▲ {{ post.upvotes }}</a>
+        <a href="{{ url_for('downvote', post_id=post.id) }}">▼ {{ post.downvotes }}</a>
+        
+    </div>
+{% endfor %}
+{% endblock %}
+
+{% block footer %}
+<p1> This is the Footer. </p1>
+{% endblock %}
